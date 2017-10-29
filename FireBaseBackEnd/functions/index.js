@@ -4,14 +4,17 @@ const functions = require('firebase-functions');
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 
 exports.testAPI = functions.https.onRequest((request, response) => {
-    string_result = "Testing FireBase API Call \n"
-        + "Call from IP: " + request.ip 
-        + "\n request_baseUrl: " + request.baseUrl
-        + "\n request_host: " + request.host
-        + "\n request_hostname: " + request.hostname
-        + "\n request_httpVersion: " + request.httpVersion
-        + "\n request_protocol: " + request.protocol
-        + "\n request_method: " + request.method;
+    string_result = "Testing FireBase API Call"
+        + "<br>Call from IP: " + request.ip 
+        + "<br>request_baseUrl: " + request.baseUrl
+        + "<br> request_originalUrl: " + request.originalUrl
+        + "<br> request_host: " + request.host
+        + "<br> request_hostname: " + request.hostname
+        + "<br> request_connection: " + request.connection
+        + "<br> request_params: " + request.params
+        + "<br> request_httpVersion: " + request.httpVersion
+        + "<br> request_protocol: " + request.protocol
+        + "<br> request_method: " + request.method;
         
     response.send(string_result);
     console.log("API call to /testAPI/ \n" + string_result);
@@ -62,7 +65,7 @@ exports.post = functions.https.onRequest((req, res) => {
             MESSAGE = ERROR_404;
 
         } else if( isPID(pid) ){
-            GET_post_ID(pid);
+            GET_post(pid);
         }
     } else if(req.method == "PUT"){
         //similar to post
@@ -91,7 +94,7 @@ function isPID(id){
     return typeof(id) === 'number';
 }
 
-function GET_post_ID(id){
+function GET_post(id){
     var result = "";
 
     for (i = 0; i < arguments.length; i++) {
